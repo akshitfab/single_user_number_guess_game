@@ -56,8 +56,12 @@ function getOutputWithMaxCount(possibleOutputsCount){
 }
 
 function calculateOutput(user_input){
-    if(isNaN(user_input))
-        return "Input should be a number."
+    if(isNaN(user_input)){
+       return "Input should be a number."
+    }else if(user_input.length != 4){
+        return "Number should be of exactly 4 digits."
+    }
+    
         
     var possibleOutputsCount = new Object();
     
