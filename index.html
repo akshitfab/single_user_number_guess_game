@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Socket.IO chat</title>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font: 13px Helvetica, Arial; }
+            div { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+            div input { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
+            div button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+            #messages { list-style-type: none; margin: 0; padding: 0; }
+            #messages li { padding: 5px 10px; }
+            #messages li:nth-child(odd) { background: #eee; }
+            </style>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    </head>
+    <script>
+        var socket = io();
+        socket.on('system output', function(msg){
+            $('#messages').append($('<li>').text(msg));
+        });
+        
+        function clientNumberSender() {
+            socket.emit('user input',$("#new_message").val());
+            $("#new_message").val("");
+            $("#new_message").focus();
+        }
+        function submitIfEnter(e){
+            if (e.keyCode == 13) // the enter key code
+            {   $('#sendNumber').click();
+                return false;
+            }
+        }
+    
+        function resetGame(){
+            socket.emit('reset game');
+            $('#messages').text("");
+        }
+    
+        $(document).ready(function() {
+            $("#new_message").focus();
+        });
+                      
+    </script>
+    <body>
+        <ul id="messages">
+            <li>*a: Matched numbers with correct places.</li>
+            <li>*b: Matched numbers with incorrect places.</li>
+            <li></li>
+        </ul>
+        <div>
+       <input id="new_message" autocomplete="off" onkeypress="submitIfEnter(event)"/>
+       <button id="sendNumber" onclick="clientNumberSender()">Send</button>
+       <button onclick="resetGame()">Reset Game</button>
+       </div>
+    </body>
+</html>
