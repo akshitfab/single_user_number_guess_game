@@ -115,7 +115,8 @@ io.on('connection', function(socket){
                 })
 });
 
+var port = process.env.PORT || 5000;
 
-http.listen(8001, function(){
-            console.log('listening on *:8001');
+http.listen(port, function(){
+            console.log('listening on *:'+port);
 });
